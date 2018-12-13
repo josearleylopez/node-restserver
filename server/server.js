@@ -3,6 +3,9 @@ require('./config/config');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+
 
 
 // parse application/x-www-form-urlencoded
@@ -11,16 +14,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+app.use(require('./routes/usuario'));
 
-app.get('/usuario', function(req, res) {
-    res.json('Hello World');
-})
-
-app.post('/usuario', function(req, res) {
-    let body = req.body;
-    res.json({
-        persona: body
-    });
+mongoose.connect(process.env.URLDB, { useCreateIndex: true, useNewUrlParser: true }, (err, res) => {
+    if (err) throw err;
+    console.log('Base de datos online');
 });
 
 app.listen(process.env.PORT, () => {
