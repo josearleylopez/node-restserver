@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const Usuario = require('../models/usuario')
 
-const { verificaToken } = require('../middlewares/autenticacion');
+const { verificaToken, verificaRoleAdmin } = require('../middlewares/autenticacion');
 
 
 app.get('/usuario', verificaToken, (req, res) => {
@@ -107,7 +107,6 @@ app.delete('/usuario/:id', [verificaToken, verificaRoleAdmin], function(req, res
             usuario: usuarioBorrado
         })
     });
-
-})
+});
 
 module.exports = app;
